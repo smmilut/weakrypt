@@ -1,0 +1,9 @@
+{
+    "description": "example config",
+    "testFiles": [
+        "../../tests/crypt.js"
+    ],
+    "excluded": [
+        "../../tests/jsWorkerTest.js"
+    ]
+}

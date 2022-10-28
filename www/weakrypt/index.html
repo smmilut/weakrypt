@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeaKrypt</title>
+    <meta name="description" content="experiment with encryption">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="theme_common.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <header class="box">
+            <h1>WeaKrypt</h1>
+            <div>
+                <p>What is your message ?</p>
+            </div>
+        </header>
+
+        <div id="inputbox" class="box">
+            <div>
+                <label for="password">Password :</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div>
+                <label for="message">Message :</label>
+                <textarea id="message" name="message" rows="5" cols="33"></textarea>
+            </div>
+            <div>
+                <button id="encryptButton" type="button">Encrypt</button>
+                <button id="decryptButton" type="button">Decrypt</button>
+            </div>
+            <div id="progress" style="visibility: hidden;">
+                <label for="progressBar">uninitialized</label>
+                <progress id="progressBar"></progress>
+            </div>
+        </div>
+        <div id="resultbox" class="box"></div>
+
+        <footer id="infosbox" class="box">
+            <p>See Github for : <a href="https://github.com/smmilut/weakrypt" target="_blank">code</a>, <a
+                    href="https://github.com/smmilut/weakrypt/blob/main/LICENSE" target="_blank">license</a>,
+                <a href="https://github.com/smmilut/weakrypt/blob/main/README.md" target="_blank">privacy</a>.
+            </p>
+        </footer>
+    </div>
+    <script src="index.js" type="module"></script>
+</body>
+
+</html>
