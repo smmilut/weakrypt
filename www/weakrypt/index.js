@@ -7,7 +7,7 @@ import * as Output from "./output.js";
  * 
  * Call this first.
  */
- function initSubModules() {
+function initSubModules() {
     Input.init();
     Output.init();
     Controller.init();

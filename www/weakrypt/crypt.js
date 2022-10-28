@@ -11,8 +11,8 @@ const crypto = await (async function envLoadFile() {
     }
 })();
 
-if (crypto.subtle === undefined) {
-    throw new Error("SubtleCrypto API unavailable.");
+if (crypto === undefined || crypto.subtle === undefined) {
+    throw new Error("SubtleCrypto API unavailable. Check that you are in a secure context.");
 }
 
 /**

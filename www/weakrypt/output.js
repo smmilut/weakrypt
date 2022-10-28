@@ -30,6 +30,23 @@ export function showDecrypted(decryptedText) {
     clipboardWriteText(decryptedText);
 }
 
+export function showError(customMessage, exception) {
+    Output_resultboxEl.innerHTML = "";
+    const pEl = document.createElement("p");
+    pEl.textContent = `${customMessage}`;
+
+    const elError = doc.createElement("p");
+    elError.classList.add("errorMsg");
+    elError.innerHTML = `<code>${exception}</code>`;
+    Output_resultboxEl.appendChild(elError);
+    if (exception.stack !== undefined) {
+        const elStack = doc.createElement("pre");
+        elStack.classList.add("stackTrace");
+        elStack.textContent = `${exception.stack}`;
+        Output_resultboxEl.appendChild(elStack);
+    }
+}
+
 async function clipboardWriteText(txt) {
     await navigator.clipboard.writeText(txt);
 }

@@ -22,6 +22,18 @@ The Salt is also provided with the message and can be public, because, as stated
 
 This requires a secure context to work (HTTPS).
 
+Provide a password and a clear message, and this tool will encrypt the message and put it in your clipboard.
+
+Provide a password and a encrypted message, and this tool will decrypt the message and put it in your clipboard.
+
+## Privacy
+
+The page contains no trackers or analytics, and uses no cookies. No information is extracted from your usage of the page.
+
+In particular, as you can see in the code, I do nothing with passwords. All cryptography is done locally in your browser. The only reason this page needs to be used live is because the browser functions require a secure context (HTTPS).
+
+Code is easy to introspect because it is not minified or obscured (though badly written probably). The scripts are simple and use no external dependencies.
+
 ## Disclaimer
 
 This is done for fun and without actual knowledge of cryptography or security. Use at your own risk.

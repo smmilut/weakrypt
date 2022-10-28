@@ -5,16 +5,27 @@ import * as Crypt from "./crypt.js";
 export function init() {
 }
 
-/** Input sends new example text */
 export async function onAskEncrypt(password, message) {
     const cipher = await Crypt.encrypt(password, message);
     const encrypted = Crypt.serialize(cipher);
     Output.showEncrypted(encrypted);
 }
 
-/** Input asks for imitations */
 export async function onAskDecrypt(password, encrypted) {
     const cipher = Crypt.deserialize(encrypted);
-    const decrypted = await Crypt.decrypt(password, cipher);
-    Output.showEncrypted(decrypted);
+    const { encryptedHex, saltHex, ivHex, } = cipher;
+    if (encryptedHex === undefined || saltHex === undefined || ivHex === undefined) {
+        Output.showError("Deserializing Error while getting the message. Check the separator used.")
+        return;
+    }
+    try {
+        const decrypted = await Crypt.decrypt(password, cipher);
+        Output.showEncrypted(decrypted);
+    } catch (error) {
+        if (error instanceof DOMException) {
+            Output.showError("Decryption Error while decrypting. Check password and encrypted text for errors.")
+        } else {
+            Output.showError("Unknown Error while decrypting.", error)
+        }
+    }
 }
