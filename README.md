@@ -10,7 +10,7 @@ Encrypt/decrypt with a password, using PBKDF2
 
 ## Technical notes
 
-The Initialization Vector is provided with the message and can be public, because, as stated by the documentation :
+The Initialization Vector is provided with the message and can be public, because, as stated by the [documentation](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt) :
 
 > The initialization vector. Must be 16 bytes, unpredictable, and preferably cryptographically random. However, it need not be secret (for example, it may be transmitted unencrypted along with the ciphertext). 
 

@@ -1,5 +1,5 @@
 import * as Output from "./output.js";
-//import * as Crypt from "./crypt.js";
+import * as Crypt from "./crypt.js";
 
 /** Always call init first */
 export function init() {
