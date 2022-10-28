@@ -13,13 +13,6 @@ import * as Output from "./output.js";
     Controller.init();
 }
 
-async function someTest() {
-    const testClip = await navigator.clipboard.readText();
-    console.log("your clipboard had", testClip);
-    await navigator.clipboard.writeText("written to clipboard from this page on " + (new Date()));
-}
-
 (function onLoad() {
     initSubModules();
-    someTest();
 })();
