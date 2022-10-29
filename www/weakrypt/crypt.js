@@ -1,18 +1,36 @@
 import { isBrowser, isNode, getGlobalObject } from "./envUtils.js";
 
-/** The correct global subtleCrypto module */
-const crypto = await (async function envLoadFile() {
-    if (isBrowser()) {
-        return (getGlobalObject()).crypto;
-    } else if (isNode()) {
-        return await import('node:crypto');
-    } else {
-        throw new Error("Only running in a web browser and Node are currently implemented.");
-    }
-})();
+let Crypt_crypto;
 
-if (crypto === undefined || crypto.subtle === undefined) {
-    throw new Error("SubtleCrypto API unavailable. Check that you are in a secure context.");
+/**
+ * @returns {Object} the correct global crypto/SubtleCrypto module
+ * @throws {Error} if crypto is unavailable
+ */
+function getCrypto() {
+    if (Crypt_crypto === undefined || Crypt_crypto.subtle === undefined) {
+        throw new Error("SubtleCrypto API unavailable. Check that you are in a secure context.");
+    } else {
+        return Crypt_crypto;
+    }
+}
+
+/**
+ * Always call init first
+ * @throws {Error} if crypto is unavailable
+ */
+export async function init() {
+    /** The correct global SubtleCrypto module */
+    Crypt_crypto = await (async function envLoadFile() {
+        if (isBrowser()) {
+            return (getGlobalObject()).crypto;
+        } else if (isNode()) {
+            return await import('node:crypto');
+        } else {
+            throw new Error("Only running in a web browser and Node are currently implemented.");
+        }
+    })();
+    // Called for the side effect of throwing if undefined
+    getCrypto();
 }
 
 /**
@@ -62,7 +80,7 @@ function decodeText(buffer) {
  * @returns {Promise} resolves to a basic CryptoKey
  */
 function passwordToKey(password) {
-    return crypto.subtle.importKey(
+    return getCrypto().subtle.importKey(
         "raw",
         encodeText(password),
         { name: "PBKDF2" },
@@ -78,7 +96,7 @@ function passwordToKey(password) {
  * @returns {Promise} resolves to a stronger CryptoKey
  */
 function strengthenKey(keyMaterial, salt) {
-    return crypto.subtle.deriveKey(
+    return getCrypto().subtle.deriveKey(
         {
             "name": "PBKDF2",
             salt,
@@ -93,11 +111,11 @@ function strengthenKey(keyMaterial, salt) {
 }
 
 function generateSalt() {
-    return crypto.getRandomValues(new Uint8Array(16));
+    return getCrypto().getRandomValues(new Uint8Array(16));
 }
 
 function generateIv() {
-    return crypto.getRandomValues(new Uint8Array(12));
+    return getCrypto().getRandomValues(new Uint8Array(12));
 }
 
 /**
@@ -111,7 +129,7 @@ export async function encrypt(password, msg) {
     const salt = generateSalt();
     const key = await strengthenKey(keyMaterial, salt);
     const iv = generateIv();
-    const encryptedMsg = await crypto.subtle.encrypt(
+    const encryptedMsg = await getCrypto().subtle.encrypt(
         {
             name: "AES-GCM",
             iv,
@@ -142,7 +160,7 @@ export async function decrypt(password, { encryptedHex, saltHex, ivHex }) {
     const key = await strengthenKey(keyMaterial, salt);
 
     try {
-        const encodedMsg = await crypto.subtle.decrypt(
+        const encodedMsg = await getCrypto().subtle.decrypt(
             {
                 name: "AES-GCM",
                 iv,

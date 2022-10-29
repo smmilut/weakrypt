@@ -3,6 +3,7 @@ import { groupIt, assert } from "../utils/femtest/test.js";
 const itShould = groupIt("crypt.js")
 
 itShould("encrypt and decrypt", async function testEncrypt() {
+    await Crypt.init();
     const message = "Hello <&é\"'(123)> sailor ! mlkjqsdl sqdf\nmlsdmkfsqd\nlcx3542209è_-à_';:,!aze";
     const password = "supersecure<\"é&321AZE>password";
 
@@ -13,7 +14,8 @@ itShould("encrypt and decrypt", async function testEncrypt() {
     assert.strictEqual(message, decryptedMsg);
 });
 
-itShould("serialize", function testSerialize() {
+itShould("serialize", async function testSerialize() {
+    await Crypt.init();
     const cipher = {
         encryptedHex: "ffffff",
         saltHex: "000000",
@@ -25,7 +27,8 @@ itShould("serialize", function testSerialize() {
     assert.strictEqual(result, expected);
 });
 
-itShould("deserialize", function testDeserialize() {
+itShould("deserialize", async function testDeserialize() {
+    await Crypt.init();
     const cipher = "000000h123456hffffff";
     const separator = "h";
     const expected = {

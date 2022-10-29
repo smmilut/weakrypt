@@ -7,10 +7,10 @@ import * as Output from "./output.js";
  * 
  * Call this first.
  */
-function initSubModules() {
+export async function initSubModules() {
     Input.init();
     Output.init();
-    Controller.init();
+    await Controller.init();
 }
 
 (function onLoad() {

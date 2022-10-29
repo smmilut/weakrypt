@@ -2,7 +2,12 @@ import * as Output from "./output.js";
 import * as Crypt from "./crypt.js";
 
 /** Always call init first */
-export function init() {
+export async function init() {
+    try {
+        await Crypt.init();
+    } catch (error) {
+        Output.showError("Error while loading crypto module.", error)
+    }
 }
 
 export async function onAskEncrypt(password, message) {
